@@ -1,0 +1,76 @@
+{
+  "name": "bread-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/bread-ui/src",
+  "tags": ["type:app", "scope:ui"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/bread-ui",
+        "browser": "apps/bread-ui/src/main.ts",
+        "tsConfig": "apps/bread-ui/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/bread-ui/public"
+          }
+        ],
+        "styles": ["apps/bread-ui/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "production": {
+          "buildTarget": "bread-ui:build:production"
+        },
+        "development": {
+          "buildTarget": "bread-ui:build:development"
+        }
+      },
+      "dependsOn": ["bread-api:serve"],
+      "options": {
+        "proxyConfig": "apps/bread-ui/proxy.conf.json"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "bread-ui:build",
+        "staticFilePath": "dist/apps/bread-ui/browser",
+        "spa": true
+      }
+    }
+  }
+}
