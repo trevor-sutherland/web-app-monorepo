@@ -27,9 +27,21 @@ export default [
                     ],
                     depConstraints: [
                         {
-                            sourceTag: "*",
+                            sourceTag: "scope:ui",
                             onlyDependOnLibsWithTags: [
-                                "*"
+                                "scope:ui"
+                            ]
+                        },
+                        {
+                            sourceTag: "scope:api",
+                            onlyDependOnLibsWithTags: [
+                                "scope:api"
+                            ]
+                        },
+                        {
+                            sourceTag: "type:lib",
+                            onlyDependOnLibsWithTags: [
+                                "type:lib"
                             ]
                         }
                     ]

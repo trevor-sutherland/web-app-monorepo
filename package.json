@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve:web": "nx serve web",
-    "serve:api": "nx serve api",
+    "serve:bread-ui": "nx serve bread-ui",
+    "serve:bread-api": "nx serve bread-api",
     "build": "nx run-many -t build",
     "lint": "nx run-many -t lint"
   },

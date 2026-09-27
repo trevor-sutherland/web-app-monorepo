@@ -29,13 +29,16 @@ Package manager is **npm**. Angular 22 requires **Node.js >= 22.22.3** (see `.nv
 
 | Area | Path | Nx project |
 |------|------|------------|
-| Angular UI | `apps/web` | `web` |
-| Nest API | `apps/api` | `api` |
-| Shared library | `packages/shared` | `shared` |
+| Bread Angular UI | `apps/bread-ui` | `bread-ui` |
+| Bread Nest API | `apps/bread-api` | `bread-api` |
+| UI libraries | `libs/ui/<domain>/<lib>` | `@web-app-monorepo/ui/<domain>/<lib>` |
+| API libraries | `libs/api/<domain>/<lib>` | `@web-app-monorepo/api/<domain>/<lib>` |
+
+Tag UI libraries `scope:ui,type:lib` and API libraries `scope:api,type:lib`.
 
 ```sh
-npm run serve:web
-npm run serve:api
+npm run serve:bread-ui
+npm run serve:bread-api
 npm run lint
 npm run build
 ```

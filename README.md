@@ -4,23 +4,24 @@ Nx workspace for web apps. Package manager is npm. Angular 22 requires Node.js 2
 
 | Area | Path | Nx project |
 |------|------|------------|
-| Angular UI | `apps/web` | `web` |
-| Nest API | `apps/api` | `api` |
-| Shared library | `packages/shared` | `shared` |
+| Bread Angular UI | `apps/bread-ui` | `bread-ui` |
+| Bread Nest API | `apps/bread-api` | `bread-api` |
+| UI libraries | `libs/ui/<domain>/<lib>` | import `@web-app-monorepo/ui/<domain>/<lib>` |
+| API libraries | `libs/api/<domain>/<lib>` | import `@web-app-monorepo/api/<domain>/<lib>` |
 
 ```sh
 npm ci
-npm run serve:web   # UI on port 4200, proxies /api to the Nest app
-npm run serve:api   # API on port 3000
+npm run serve:bread-ui   # UI on port 4200, proxies /api to the Nest app
+npm run serve:bread-api  # API on port 3000
 npm run lint
 npm run build
 ```
 
-Generate another app or library with Nx, for example:
+Libraries are grouped by layer, then domain, then library name. Tag UI libraries `scope:ui` and `type:lib`. Tag API libraries `scope:api` and `type:lib`. UI projects can depend only on UI projects, and API projects can depend only on API projects.
 
 ```sh
-npx nx g @nx/angular:application apps/another-web --style=scss --routing
-npx nx g @nx/js:library packages/pkg1 --importPath=@web-app-monorepo/pkg1
+npx nx g @nx/angular:library libs/ui/<domain>/<lib> --prefix=bread --tags=scope:ui,type:lib
+npx nx g @nx/js:library libs/api/<domain>/<lib> --importPath=@web-app-monorepo/api/<domain>/<lib> --tags=scope:api,type:lib
 ```
 
-`nx show project <name>` lists the targets for a project. CI runs `lint` and `build` on pull requests. Connect Nx Cloud later with `npx nx connect` if you want remote caching.
+`nx show project <name>` lists the targets for a project. CI runs `lint` and `build` on pull requests.
