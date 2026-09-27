@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { ConvertPage } from './convert/convert-page';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [ConvertPage],
   selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  template: '<app-convert-page />',
 })
-export class App {
-  protected title = 'bread-ui';
-}
+export class App {}

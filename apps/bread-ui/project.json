@@ -21,14 +21,18 @@
             "input": "apps/bread-ui/public"
           }
         ],
-        "styles": ["apps/bread-ui/src/styles.scss"]
+        "polyfills": ["@angular/localize/init"],
+        "styles": [
+          "node_modules/bootstrap/dist/css/bootstrap.min.css",
+          "apps/bread-ui/src/styles.scss"
+        ]
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
+              "maximumWarning": "600kb",
               "maximumError": "1mb"
             },
             {
@@ -38,6 +42,22 @@
             }
           ],
           "outputHashing": "all"
+        },
+        "github-pages": {
+          "baseHref": "/web-app-monorepo/",
+          "outputHashing": "all",
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "600kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ]
         },
         "development": {
           "optimization": false,
@@ -58,7 +78,6 @@
           "buildTarget": "bread-ui:build:development"
         }
       },
-      "dependsOn": ["bread-api:serve"],
       "options": {
         "proxyConfig": "apps/bread-ui/proxy.conf.json"
       }

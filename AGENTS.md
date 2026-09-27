@@ -20,21 +20,22 @@
 - DON'T USE for: basic generator syntax (`nx g @nx/react:app`), standard commands, things you already know
 - The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
 
-
 <!-- nx configuration end-->
 
 # web-app-monorepo
 
 Package manager is **npm**. Angular 22 requires **Node.js >= 22.22.3** (see `.nvmrc`).
 
-| Area | Path | Nx project |
-|------|------|------------|
-| Bread Angular UI | `apps/bread-ui` | `bread-ui` |
-| Bread Nest API | `apps/bread-api` | `bread-api` |
-| UI libraries | `libs/ui/<domain>/<lib>` | `@web-app-monorepo/ui/<domain>/<lib>` |
-| API libraries | `libs/api/<domain>/<lib>` | `@web-app-monorepo/api/<domain>/<lib>` |
+| Area                       | Path                      | Nx project                             |
+| -------------------------- | ------------------------- | -------------------------------------- |
+| Bread Angular UI           | `apps/bread-ui`           | `bread-ui`                             |
+| Bread Nest API             | `apps/bread-api`          | `bread-api`                            |
+| UI libraries               | `libs/ui/<app>/<lib>`     | `@web-app-monorepo/ui/<app>/<lib>`     |
+| Recipe catalog and scaling | `libs/ui/bread/recipes`   | `ui-bread-recipes`                     |
+| Bake journal storage       | `libs/ui/bread/journal`   | `ui-bread-journal`                     |
+| API libraries              | `libs/api/<app>/<lib>`    | `@web-app-monorepo/api/<app>/<lib>`    |
 
-Tag UI libraries `scope:ui,type:lib` and API libraries `scope:api,type:lib`.
+`<app>` is the application name, such as `bread`. Tag UI libraries `scope:ui,type:lib` and API libraries `scope:api,type:lib`.
 
 ```sh
 npm run serve:bread-ui
