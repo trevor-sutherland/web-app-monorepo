@@ -3,6 +3,12 @@
     {{ session.activeProjectId() ? 'Edit project' : 'Save as project' }}
   </h3>
 
+  @if (session.photoError()) {
+  <ngb-alert type="danger" (closed)="session.photoError.set('')">
+    {{ session.photoError() }}
+  </ngb-alert>
+  }
+
   @if (!session.recipe() && !session.activeProjectId()) {
   <p class="text-muted">Select a bread recipe above to start a project.</p>
   }
@@ -107,9 +113,6 @@
       </button>
       }
     </div>
-    @if (session.photoError()) {
-    <div class="text-danger small mt-2">{{ session.photoError() }}</div>
-    }
   </div>
 
   <div class="d-flex flex-wrap gap-2">
@@ -125,7 +128,7 @@
     <button
       type="button"
       class="btn btn-outline-danger"
-      (click)="session.deleteProject()"
+      (click)="confirmDelete(deleteConfirm)"
     >
       Delete
     </button>
@@ -139,3 +142,32 @@
     </button>
   </div>
 </div>
+
+<ng-template #deleteConfirm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="delete-project-title">
+      Delete this bread project?
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="mb-0">This removes the bake from this browser.</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.dismiss()"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-danger" (click)="modal.close()">
+      Delete
+    </button>
+  </div>
+</ng-template>

@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, TemplateRef } from '@angular/core';
+import { NgbAlert, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   hydrationPercent,
   visibleActualFields,
@@ -8,10 +9,21 @@ import { ConvertSession } from './convert-session';
 
 @Component({
   selector: 'app-project-editor',
+  imports: [NgbAlert],
   templateUrl: './project-editor.html',
 })
 export class ProjectEditor {
   readonly session = inject(ConvertSession);
+  private readonly modal = inject(NgbModal);
+
+  confirmDelete(content: TemplateRef<unknown>): void {
+    this.modal
+      .open(content, { ariaLabelledBy: 'delete-project-title' })
+      .result.then(
+        () => this.session.deleteProject(),
+        () => undefined,
+      );
+  }
 
   fields() {
     return visibleActualFields(

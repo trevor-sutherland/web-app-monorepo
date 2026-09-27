@@ -34,6 +34,7 @@ export class ConvertSession {
   readonly photo = signal('');
   readonly photoBusy = signal(false);
   readonly photoError = signal('');
+  readonly importError = signal('');
   readonly actuals = signal<RecipeActuals>(emptyActuals(500));
   readonly heroUrl = signal('');
 
@@ -169,7 +170,6 @@ export class ConvertSession {
   deleteProject(): void {
     const activeId = this.activeProjectId();
     if (!activeId) return;
-    if (!globalThis.confirm('Delete this bread project?')) return;
     this.persist(this.projects().filter((project) => project.id !== activeId));
     this.clearProject();
   }
@@ -230,18 +230,23 @@ export class ConvertSession {
 
   importFile(file: File | undefined): void {
     if (!file) return;
+    this.importError.set('');
     const reader = new FileReader();
     reader.onload = () => {
       try {
         const imported = parseImportedProjects(String(reader.result));
         this.persist(mergeProjects(this.projects(), imported));
+        this.importError.set('');
       } catch (err) {
-        globalThis.alert(
+        this.importError.set(
           err instanceof Error
             ? err.message
             : 'Could not import projects. Use a JSON export from this app.',
         );
       }
+    };
+    reader.onerror = () => {
+      this.importError.set('Could not read that file.');
     };
     reader.readAsText(file);
   }

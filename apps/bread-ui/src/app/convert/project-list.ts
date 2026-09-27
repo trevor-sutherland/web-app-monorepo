@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import type { BreadProject } from '@web-app-monorepo/ui/bread/journal';
 import { ConvertSession } from './convert-session';
 
 @Component({
   selector: 'app-project-list',
+  imports: [NgbAlert],
   template: `
     <div class="project-list text-start">
       <div
@@ -36,6 +38,11 @@ import { ConvertSession } from './convert-session';
           </label>
         </div>
       </div>
+      @if (session.importError()) {
+        <ngb-alert type="danger" (closed)="session.importError.set('')">
+          {{ session.importError() }}
+        </ngb-alert>
+      }
       @if (sorted().length === 0) {
         <p class="text-muted mb-0">
           No saved bakes yet. Choose a recipe, set flour, then save a project
