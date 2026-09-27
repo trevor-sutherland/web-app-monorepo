@@ -6,7 +6,7 @@
     "serve:bread-ui": "nx serve bread-ui",
     "serve:bread-api": "nx serve bread-api",
     "build": "nx run-many -t build",
-    "build:pages": "nx build bread-ui --configuration=github-pages",
+    "build:pages": "nx build bread-ui --configuration=production",
     "lint": "nx run-many -t lint"
   },
   "engines": {

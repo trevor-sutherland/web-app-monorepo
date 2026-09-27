@@ -22,10 +22,10 @@ npx nx test ui-bread-journal
 
 The header photo is optional. Set `unsplashAccessKey` in `apps/bread-ui/src/environments/environment.ts` to load a random bread photo from Unsplash. Without a key, the header stays a solid background.
 
-Pushes to `main` deploy Bread Convert with GitHub Actions (`.github/workflows/deploy-pages.yml`), the same Pages setup as the bread-convert repo. The site is served at `https://trevor-sutherland.github.io/web-app-monorepo/`. In the repository settings, set Pages → Build and deployment → Source to **GitHub Actions** before the first deploy.
+Pushes to the default branch deploy **bread-ui** with GitLab Pages (`.gitlab-ci.yml`). The job runs `nx build bread-ui` and publishes `dist/apps/bread-ui/browser`. The site URL is the project’s Pages address, shown under Deploy → Pages (`CI_PAGES_URL`). The build sets `<base href>` from that URL so scripts and styles load on the Pages path.
 
 ```sh
 npm run build:pages
 ```
 
-That build writes `dist/apps/bread-ui/browser` with `<base href="/web-app-monorepo/">`. Bake projects saved in the browser on `trevor-sutherland.github.io` (including the old `/bread-convert/` site) stay available, because `localStorage` is scoped to that origin. Export them before opening the app on a different host.
+That writes a production `bread-ui` bundle to `dist/apps/bread-ui/browser`. Bake projects stay in this browser under `localStorage`. Export them before opening the app on a different host.
