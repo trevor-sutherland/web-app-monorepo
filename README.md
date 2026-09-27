@@ -2,26 +2,30 @@
 
 Nx workspace for web apps. Package manager is npm. Angular 22 requires Node.js 22.22.3 or newer (see `.nvmrc`).
 
-| Area | Path | Nx project |
-|------|------|------------|
-| Bread Angular UI | `apps/bread-ui` | `bread-ui` |
-| Bread Nest API | `apps/bread-api` | `bread-api` |
-| UI libraries | `libs/ui/<domain>/<lib>` | import `@web-app-monorepo/ui/<domain>/<lib>` |
-| API libraries | `libs/api/<domain>/<lib>` | import `@web-app-monorepo/api/<domain>/<lib>` |
+| Area                       | Path                   | Nx project        |
+| -------------------------- | ---------------------- | ----------------- |
+| Bread Convert UI           | `apps/bread-ui`        | `bread-ui`        |
+| Bread Nest API             | `apps/bread-api`       | `bread-api`       |
+| Recipe catalog and scaling | `libs/ui/recipes/data` | `ui-recipes-data` |
+| Bake journal storage       | `libs/ui/journal/data` | `ui-journal-data` |
+
+Bread Convert is the Angular rewrite of the React baker’s-percentage calculator. Pick a recipe, set a flour weight, and the page shows grams plus the preparation schedule. Bake projects (notes, actual grams, optional photo) stay in this browser under `localStorage` key `breadConvert.projects`. Export and import JSON to move them between browsers.
 
 ```sh
 npm ci
-npm run serve:bread-ui   # UI on port 4200, proxies /api to the Nest app
-npm run serve:bread-api  # API on port 3000
+npm run serve:bread-ui
 npm run lint
 npm run build
+npx nx test ui-recipes-data
+npx nx test ui-journal-data
 ```
 
-Libraries are grouped by layer, then domain, then library name. Tag UI libraries `scope:ui` and `type:lib`. Tag API libraries `scope:api` and `type:lib`. UI projects can depend only on UI projects, and API projects can depend only on API projects.
+The header photo is optional. Set `unsplashAccessKey` in `apps/bread-ui/src/environments/environment.ts` to load a random bread photo from Unsplash. Without a key, the header stays a solid background.
+
+To build for the existing GitHub Pages path `/bread-convert/`:
 
 ```sh
-npx nx g @nx/angular:library libs/ui/<domain>/<lib> --prefix=bread --tags=scope:ui,type:lib
-npx nx g @nx/js:library libs/api/<domain>/<lib> --importPath=@web-app-monorepo/api/<domain>/<lib> --tags=scope:api,type:lib
+npx nx build bread-ui --configuration=github-pages
 ```
 
-`nx show project <name>` lists the targets for a project. CI runs `lint` and `build` on pull requests.
+Projects saved on `trevor-sutherland.github.io/bread-convert` stay on that origin. Export them before opening the app on a different host.

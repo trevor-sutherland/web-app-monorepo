@@ -1,0 +1,59 @@
+<div class="bread-convert">
+  <header
+    class="app-header"
+    [style.background-image]="session.heroUrl() ? 'url(' + session.heroUrl() + ')' : null"
+  >
+    <h1 class="app-title">For Bread Baking</h1>
+  </header>
+  <div class="container">
+    <div class="row g-4 text-start">
+      <div class="col-lg-4">
+        <form (submit)="$event.preventDefault()">
+          <div class="mb-3">
+            <label class="form-label" for="formSelect">Choose a Bread</label>
+            <select
+              class="form-select"
+              id="formSelect"
+              [value]="session.selectedTitle()"
+              (change)="session.selectRecipe($any($event.target).value)"
+            >
+              <option value="">Select a Bread</option>
+              @for (recipe of session.recipes; track recipe.title) {
+              <option [value]="recipe.title">{{ recipe.title }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="flourWeight">Flour weight (g)</label>
+            <input
+              id="flourWeight"
+              type="number"
+              class="form-control"
+              min="0"
+              step="1"
+              [value]="session.flour()"
+              (input)="session.setFlour($any($event.target).value)"
+            />
+          </div>
+        </form>
+        <div class="mt-4">
+          <app-formula-list
+            [recipe]="session.recipe()"
+            [flour]="session.flour()"
+          />
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <app-project-editor />
+      </div>
+      <div class="col-lg-4">
+        <app-project-list />
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col">
+        <app-preparation-table [recipe]="session.recipe()" />
+      </div>
+    </div>
+  </div>
+</div>

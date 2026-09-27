@@ -1,0 +1,141 @@
+<div class="project-editor text-start">
+  <h3 class="mb-3">
+    {{ session.activeProjectId() ? 'Edit project' : 'Save as project' }}
+  </h3>
+
+  @if (!session.recipe() && !session.activeProjectId()) {
+  <p class="text-muted">Select a bread recipe above to start a project.</p>
+  }
+
+  <div class="mb-3">
+    <label class="form-label" for="projectTitle">Project title</label>
+    <input
+      id="projectTitle"
+      type="text"
+      class="form-control"
+      placeholder="Saturday country loaf"
+      [value]="session.projectTitle()"
+      (input)="session.setProjectTitle($any($event.target).value)"
+    />
+    @if (session.recipe(); as recipe) {
+    <div class="form-text">Based on {{ recipe.title }}</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <div class="form-label">Actual amounts (grams)</div>
+    <p class="form-text mt-0 mb-2">
+      Pre-filled from the formula. Edit if you used different amounts in the
+      bowl.
+    </p>
+    <div class="row g-2">
+      @for (field of fields(); track field.key) {
+      <div class="col-md-6">
+        <label class="form-label small mb-0" [attr.for]="'actual-' + field.key">
+          {{ field.label }} @if (overridden(field.key)) {
+          <span class="text-warning ms-1"
+            >(formula {{ formulaGrams(field.key) }}g)</span
+          >
+          }
+        </label>
+        <input
+          [id]="'actual-' + field.key"
+          type="number"
+          class="form-control form-control-sm"
+          min="0"
+          step="1"
+          [value]="session.actuals()[field.key]"
+          (input)="session.setActual(field.key, $any($event.target).value)"
+        />
+      </div>
+      }
+    </div>
+    @if (hydration() !== null) {
+    <div class="form-text mt-2">
+      Hydration: {{ hydration() }}% (water ÷ flour)
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="projectNotes">Notes</label>
+    <textarea
+      id="projectNotes"
+      class="form-control"
+      rows="4"
+      placeholder="Dough feel, fermentation vs plan, oven spring, crumb, what to change next time…"
+      [value]="session.notes()"
+      (input)="session.setNotes($any($event.target).value)"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="projectPhoto">Photo</label>
+    <p class="form-text mt-0 mb-2">
+      Optional crumb or loaf shot for this bake. Compressed and saved with the
+      project on this device.
+    </p>
+    @if (session.photo()) {
+    <div class="project-photo-preview mb-2">
+      <img [src]="session.photo()" alt="Bake photo for notes" />
+    </div>
+    }
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <label
+        class="btn btn-sm btn-outline-secondary mb-0"
+        [class.disabled]="session.photoBusy()"
+      >
+        {{ session.photoBusy() ? 'Processing…' : session.photo() ? 'Replace
+        photo' : 'Upload photo' }}
+        <input
+          id="projectPhoto"
+          type="file"
+          accept="image/*"
+          class="d-none"
+          [disabled]="session.photoBusy()"
+          (change)="onPhoto($event)"
+        />
+      </label>
+      @if (session.photo()) {
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-danger"
+        (click)="session.removePhoto()"
+        [disabled]="session.photoBusy()"
+      >
+        Remove photo
+      </button>
+      }
+    </div>
+    @if (session.photoError()) {
+    <div class="text-danger small mt-2">{{ session.photoError() }}</div>
+    }
+  </div>
+
+  <div class="d-flex flex-wrap gap-2">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="session.saveProject()"
+      [disabled]="!session.projectTitle().trim() || !session.recipe()"
+    >
+      {{ session.activeProjectId() ? 'Update project' : 'Save project' }}
+    </button>
+    @if (session.activeProjectId()) {
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="session.deleteProject()"
+    >
+      Delete
+    </button>
+    }
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="session.clearProject()"
+    >
+      Clear
+    </button>
+  </div>
+</div>

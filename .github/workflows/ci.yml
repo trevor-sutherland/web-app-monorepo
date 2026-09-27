@@ -18,4 +18,4 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npx nx run-many -t lint build
+      - run: npx nx run-many -t lint test build

@@ -16,7 +16,13 @@
     "strict": false,
     "paths": {
       "@web-app-monorepo/ui/*": ["./libs/ui/*/src/index.ts"],
-      "@web-app-monorepo/api/*": ["./libs/api/*/src/index.ts"]
+      "@web-app-monorepo/api/*": ["./libs/api/*/src/index.ts"],
+      "@web-app-monorepo/ui/recipes/data": [
+        "./libs/ui/recipes/data/src/index.ts"
+      ],
+      "@web-app-monorepo/ui/journal/data": [
+        "./libs/ui/journal/data/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

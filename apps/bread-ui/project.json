@@ -39,6 +39,10 @@
           ],
           "outputHashing": "all"
         },
+        "github-pages": {
+          "baseHref": "/bread-convert/",
+          "outputHashing": "all"
+        },
         "development": {
           "optimization": false,
           "extractLicenses": false,
@@ -58,7 +62,6 @@
           "buildTarget": "bread-ui:build:development"
         }
       },
-      "dependsOn": ["bread-api:serve"],
       "options": {
         "proxyConfig": "apps/bread-ui/proxy.conf.json"
       }
