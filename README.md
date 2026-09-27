@@ -22,10 +22,10 @@ npx nx test ui-bread-journal
 
 The header photo is optional. Set `unsplashAccessKey` in `apps/bread-ui/src/environments/environment.ts` to load a random bread photo from Unsplash. Without a key, the header stays a solid background.
 
-Pushes to the default branch deploy **bread-ui** with GitLab Pages (`.gitlab-ci.yml`). The job runs `nx build bread-ui` and publishes `dist/apps/bread-ui/browser`. The site URL is the project’s Pages address, shown under Deploy → Pages (`CI_PAGES_URL`). The build sets `<base href>` from that URL so scripts and styles load on the Pages path.
+Pushes to `main` deploy **bread-ui** to GitHub Pages (`.github/workflows/deploy-pages.yml`). The job runs `nx build bread-ui` and publishes `dist/apps/bread-ui/browser`. The site is https://trevor-sutherland.github.io/web-app-monorepo/. In the repository settings, set Pages → Build and deployment → Source to **GitHub Actions** before the first deploy.
 
 ```sh
 npm run build:pages
 ```
 
-That writes a production `bread-ui` bundle to `dist/apps/bread-ui/browser`. Bake projects stay in this browser under `localStorage`. Export them before opening the app on a different host.
+That writes `dist/apps/bread-ui/browser` with `<base href="/web-app-monorepo/">`. Bake projects stay in this browser under `localStorage`. Export them before opening the app on a different host.
