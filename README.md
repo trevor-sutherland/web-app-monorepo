@@ -20,7 +20,7 @@ npx nx test ui-bread-recipes
 npx nx test ui-bread-journal
 ```
 
-The header photo is optional. Set `unsplashAccessKey` in `apps/bread-ui/src/environments/environment.ts` to load a random bread photo from Unsplash. Without a key, the header stays a solid background.
+The header loads a random bread photo from Unsplash, using the same browser client id as the old app. If that request fails, the header stays a solid background.
 
 Pushes to `main` deploy **bread-ui** to GitHub Pages (`.github/workflows/deploy-pages.yml`). The job runs `nx build bread-ui` and publishes `dist/apps/bread-ui/browser`. The site is https://trevor-sutherland.github.io/web-app-monorepo/. In the repository settings, set Pages → Build and deployment → Source to **GitHub Actions** before the first deploy.
 
