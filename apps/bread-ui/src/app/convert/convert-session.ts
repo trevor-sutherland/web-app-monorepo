@@ -267,11 +267,17 @@ export class ConvertSession {
     }
   }
 
+  heroBackground(): string | null {
+    const url = this.heroUrl();
+    if (!url) return null;
+    return `url("${url.replace(/"/g, '%22')}")`;
+  }
+
   private loadHero(): void {
     const key = environment.unsplashAccessKey;
     if (!key) return;
     this.http
-      .get<{ urls?: { full?: string } }>(
+      .get<{ urls?: { regular?: string; full?: string } }>(
         'https://api.unsplash.com/photos/random',
         {
           params: { client_id: key, query: 'bread' },
@@ -279,7 +285,8 @@ export class ConvertSession {
       )
       .subscribe({
         next: (response) => {
-          const url = response.urls?.full;
+          const urls = response.urls;
+          const url = urls?.regular || urls?.full;
           if (url) this.heroUrl.set(url);
         },
         error: () => {
