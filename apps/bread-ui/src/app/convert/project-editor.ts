@@ -3,7 +3,7 @@ import {
   hydrationPercent,
   visibleActualFields,
   type RecipeActuals,
-} from '@web-app-monorepo/ui/recipes/data';
+} from '@web-app-monorepo/ui/bread/recipes';
 import { ConvertSession } from './convert-session';
 
 @Component({

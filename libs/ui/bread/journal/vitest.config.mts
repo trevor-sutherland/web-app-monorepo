@@ -4,17 +4,17 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../../../node_modules/.vite/libs/ui/recipes/data',
+  cacheDir: '../../../../node_modules/.vite/libs/ui/bread/journal',
   plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
   test: {
-    name: 'ui-recipes-data',
+    name: 'ui-bread-journal',
     watch: false,
     globals: true,
     environment: 'node',
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../../../coverage/libs/ui/recipes/data',
+      reportsDirectory: '../../../../coverage/libs/ui/bread/journal',
       provider: 'v8' as const,
     },
   },

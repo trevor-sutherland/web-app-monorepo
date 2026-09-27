@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import {
   formulaLines,
   type BreadRecipe,
-} from '@web-app-monorepo/ui/recipes/data';
+} from '@web-app-monorepo/ui/bread/recipes';
 
 @Component({
   selector: 'app-formula-list',

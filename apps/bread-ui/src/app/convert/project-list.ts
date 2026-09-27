@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import type { BreadProject } from '@web-app-monorepo/ui/journal/data';
+import type { BreadProject } from '@web-app-monorepo/ui/bread/journal';
 import { ConvertSession } from './convert-session';
 
 @Component({

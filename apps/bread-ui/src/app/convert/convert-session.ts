@@ -10,14 +10,14 @@ import {
   projectsToExportJson,
   saveProjects,
   type BreadProject,
-} from '@web-app-monorepo/ui/journal/data';
+} from '@web-app-monorepo/ui/bread/journal';
 import {
   breadRecipes,
   defaultProjectTitle,
   emptyActuals,
   scaleRecipeToActuals,
   type RecipeActuals,
-} from '@web-app-monorepo/ui/recipes/data';
+} from '@web-app-monorepo/ui/bread/recipes';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })

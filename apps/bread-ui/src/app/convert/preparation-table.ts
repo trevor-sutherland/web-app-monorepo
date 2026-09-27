@@ -7,7 +7,7 @@ import {
   formatTotalHours,
   totalPrepHours,
   type BreadRecipe,
-} from '@web-app-monorepo/ui/recipes/data';
+} from '@web-app-monorepo/ui/bread/recipes';
 
 @Component({
   selector: 'app-preparation-table',
