@@ -1,0 +1,38 @@
+# Publish the Angular bread-ui app with GitLab Pages.
+# The live URL is $CI_PAGES_URL (Deploy → Pages).
+
+default:
+  image: node:22.22.3
+  interruptible: true
+
+variables:
+  NX_DAEMON: "false"
+  NPM_CONFIG_FUND: "false"
+  NPM_CONFIG_AUDIT: "false"
+
+stages:
+  - deploy
+
+pages:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - |
+      if [ -n "$CI_PAGES_URL" ]; then
+        BASE_HREF="$(node -e "const u=new URL(process.env.CI_PAGES_URL); let p=u.pathname; if (!p.endsWith('/')) p += '/'; process.stdout.write(p)")"
+      else
+        BASE_HREF="/${CI_PROJECT_NAME}/"
+      fi
+      echo "Building bread-ui with base href ${BASE_HREF}"
+      npx nx build bread-ui --configuration=production --baseHref="$BASE_HREF"
+    - test -f dist/apps/bread-ui/browser/index.html
+  pages:
+    publish: dist/apps/bread-ui/browser
